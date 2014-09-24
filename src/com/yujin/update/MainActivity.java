@@ -5,6 +5,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.jar.Attributes;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -12,9 +19,10 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 import viin.patch.update.PatchUpdate;
-
 import android.app.DownloadManager;
 import android.app.ListActivity;
 import android.content.BroadcastReceiver;
@@ -230,7 +238,70 @@ public class MainActivity extends ListActivity {
         }  
         return sdDir.toString();  
     }  
-    
+    private boolean checkNewVersion() {  
+        try {  
+            URL url=new URL(apkUrl);  
+            SAXParserFactory factory=SAXParserFactory.newInstance();  
+            factory.setNamespaceAware(true);  
+            factory.setValidating(false);  
+            SAXParser parser=factory.newSAXParser();  
+            InputStream is = url.openStream();  
+            parser.parse(is, new DefaultHandler(){  
+                private String cur="";  
+                private int step;  
+                  
+                @Override  
+                public void startDocument() throws SAXException {  
+                    step = 0;  
+                }  
+                  
+                public void startElement(String uri, String localName,  
+                        String qName, Attributes attributes)  
+                        throws SAXException {  
+                    cur = localName;  
+                }  
+                  
+                @Override  
+                public void characters(char[] ch, int start, int length)  
+                        throws SAXException {  
+                    String str = new String(ch, start, length).trim();  
+                    if (str == null || str.equals(""))  
+                        return;  
+                    if (cur.equals("url")) {  
+                        //apkUrl = str;  
+                    }  
+                    if (cur.equals("map_version")) {  
+                        //mapVersion = str;  
+                    }  
+                }  
+                  
+                @Override  
+                public void endElement(String uri, String localName,  
+                        String qName) throws SAXException {  
+                    step = step + 1;  
+                }  
+                  
+                @Override  
+                public void endDocument() throws SAXException {  
+                    super.endDocument();  
+                }  
+            });  
+        } catch (MalformedURLException e) {  
+            e.printStackTrace();  
+        } catch (ParserConfigurationException e) {  
+            e.printStackTrace();  
+        } catch (SAXException e) {  
+            e.printStackTrace();  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        }  
+        //if (diffVersion(mapVersion))
+        if (true)
+            return true;  
+        else  
+            return false;  
+    }  
+
     @Override
     protected void onStop() {
     	super.onStop();
