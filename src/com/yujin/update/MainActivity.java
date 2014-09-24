@@ -76,9 +76,9 @@ public class MainActivity extends ListActivity {
     }
     @Override
     protected void onResume() {
-    	// TODO Auto-generated method stub
-    	super.onResume();
-    	IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);  
+        // TODO Auto-generated method stub
+        super.onResume();
+        IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);  
         filter.addAction(DownloadManager.ACTION_NOTIFICATION_CLICKED);
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         receiver = new BroadcastReceiver() {
@@ -99,13 +99,13 @@ public class MainActivity extends ListActivity {
         Log.i(TAG, "position: " + position + " id: " +id);
         switch((int)id) {
         case 0:
-        	downloadFileDownloadManager(apkUrl);
+            downloadFileDownloadManager(apkUrl);
             break;
         case 1:
-        	downFileHttp(apkUrl);
+            downFileHttp(apkUrl);
             break;
         case 2:
-        	downloadFilePatch();
+            downloadFilePatch();
             break;
             default:
                 Log.i(TAG, "Invalid click");
@@ -151,26 +151,26 @@ public class MainActivity extends ListActivity {
         }.start();
     }
     
-	public void downloadFileDownloadManager(final String url) {
-		// TODO Auto-generated method stub
-		mDownloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-		Uri uri = Uri.parse(url);
-		DownloadManager.Request request = new DownloadManager.Request(uri);
-		downloadId = mDownloadManager.enqueue(request);
-		request.setDestinationUri(Uri.parse(path));
-		mDownloadManager.enqueue(request);
-	}
-	
+    public void downloadFileDownloadManager(final String url) {
+        // TODO Auto-generated method stub
+        mDownloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(url);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        downloadId = mDownloadManager.enqueue(request);
+        request.setDestinationUri(Uri.parse(path));
+        mDownloadManager.enqueue(request);
+    }
+    
     public void downloadFilePatch() {
-    	File file = new File(path);
+        File file = new File(path);
         if(file.exists()){
-        	if(!file.isDirectory()){
-        		file.delete();
-        		file.mkdir();
-        	}
+            if(!file.isDirectory()){
+                file.delete();
+                file.mkdir();
+            }
         }else {
-			file.mkdir();
-		}
+            file.mkdir();
+        }
         String patch = "app.patch";
         String oldapk = "old.apk";
         
@@ -186,47 +186,47 @@ public class MainActivity extends ListActivity {
         AssetManager am = getAssets();
         //先把assets里面patch文件写入sd的1目录下面
         try {
-        	//String[]	patches	=	new	String[]{"app1.patch","app2.patch","app3.patch"};  
-         	String[] patches = new String[]{"app1.patch"}; 
-			InputStream is = null;
-			byte[] buffer = new byte[1024];
-			int tmp = -1;
-			OutputStream outputStream = new FileOutputStream(new File(patchpath));
-			for (int i = 0; i < patches.length; i++) {
-				is = am.open(patches[i]);
-				while((tmp = is.read(buffer)) != -1){
-					outputStream.write(buffer, 0, tmp);	
-				}
-				outputStream.flush();
-				is.close();
-			}
-			outputStream.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}  
+            //String[]    patches    =    new    String[]{"app1.patch","app2.patch","app3.patch"};  
+             String[] patches = new String[]{"app1.patch"}; 
+            InputStream is = null;
+            byte[] buffer = new byte[1024];
+            int tmp = -1;
+            OutputStream outputStream = new FileOutputStream(new File(patchpath));
+            for (int i = 0; i < patches.length; i++) {
+                is = am.open(patches[i]);
+                while((tmp = is.read(buffer)) != -1){
+                    outputStream.write(buffer, 0, tmp);    
+                }
+                outputStream.flush();
+                is.close();
+            }
+            outputStream.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }  
         //先把assets里面old apk文件写入sd的1目录下面
         try {
-			InputStream is = am.open(oldapk);
-			byte[] buffer = new	byte[1024 * 2];
-			int	tmp = -1;
-			OutputStream outputStream = new FileOutputStream(new File(oldapk_filepath));
-			while((tmp = is.read(buffer)) != -1){
-				outputStream.write(buffer, 0, tmp);
-			}
-			outputStream.flush();
-			is.close();
-			outputStream.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            InputStream is = am.open(oldapk);
+            byte[] buffer = new    byte[1024 * 2];
+            int    tmp = -1;
+            OutputStream outputStream = new FileOutputStream(new File(oldapk_filepath));
+            while((tmp = is.read(buffer)) != -1){
+                outputStream.write(buffer, 0, tmp);
+            }
+            outputStream.flush();
+            is.close();
+            outputStream.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         
         //把旧的apk和补丁合在一起,就结合成最新版本的apk
-        PatchUpdate	patchInterence	=	new	PatchUpdate();
+        PatchUpdate    patchInterence    =    new    PatchUpdate();
         patchInterence.patch(oldapk_filepath, newapk_savepath, patchpath);
         Log.i(TAG, "-------------------------------------------:"+path);
-        Toast.makeText(MainActivity.this, "新的apk已经写入到"	+	path	+	"目录下面", Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, "新的apk已经写入到"    +    path    +    "目录下面", Toast.LENGTH_LONG).show();
     }
     
     private String getSDPath() {  
@@ -304,14 +304,14 @@ public class MainActivity extends ListActivity {
 
     @Override
     protected void onStop() {
-    	super.onStop();
-    	unregisterReceiver(receiver);
+        super.onStop();
+        unregisterReceiver(receiver);
     }
     
     @Override
     protected void onDestroy() {
-    	super.onDestroy();
-    	
+        super.onDestroy();
+        
     }
     class DownloadChangeObserver extends ContentObserver {
         
