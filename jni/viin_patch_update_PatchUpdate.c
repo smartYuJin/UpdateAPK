@@ -1603,7 +1603,7 @@ int applypatch(int argc,char * argv[])
 }
 
 
-JNIEXPORT jint JNICALL Java_viin_patch_update_PatchUpdate_patch(JNIEnv *env,
+JNIEXPORT jint JNICALL Java_com_yujin_patch_update_PatchUpdate_patch(JNIEnv *env,
         jobject obj, jstring old, jstring new , jstring patch)
 {
 	  char * ch[4];

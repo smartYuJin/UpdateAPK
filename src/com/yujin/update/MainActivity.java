@@ -22,7 +22,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import viin.patch.update.PatchUpdate;
+import com.yujin.patch.update.PatchUpdate;
+
 import android.app.DownloadManager;
 import android.app.ListActivity;
 import android.content.BroadcastReceiver;

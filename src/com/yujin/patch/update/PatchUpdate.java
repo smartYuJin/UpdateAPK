@@ -1,4 +1,4 @@
-package viin.patch.update;
+package com.yujin.patch.update;
 
 public class PatchUpdate {
 
