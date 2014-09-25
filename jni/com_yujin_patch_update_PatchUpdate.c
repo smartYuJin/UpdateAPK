@@ -11,7 +11,7 @@
 #include <fcntl.h>
 #include <android/log.h>
 #include <jni.h>
-#include "viin_patch_update_PatchUpdate.h"
+#include "com_yujin_patch_update_PatchUpdate.h"
 
 /*---------------------------------------------------*/
 void BZ2_hbCreateDecodeTables ( Int32 *limit,

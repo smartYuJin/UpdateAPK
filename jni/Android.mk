@@ -20,7 +20,7 @@ LOCAL_MODULE    := update
 LOCAL_CXXFLAGS :=
 #LOCAL_CFLAGS	:= -D__cplusplus -g
 LOCAL_C_INCLUDES := $(LOCAL_PATH)
-LOCAL_SRC_FILES := viin_patch_update_PatchUpdate.c
+LOCAL_SRC_FILES := com_yujin_patch_update_PatchUpdate.c
 LOCAL_LDLIBS := -lz -llog
 include $(BUILD_SHARED_LIBRARY)
 
